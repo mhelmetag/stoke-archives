@@ -1,2 +1,3 @@
 # stoke-archives
-A collection of previous swell data for machine learning
+
+An archive of swell data for machine learning and other things

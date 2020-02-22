@@ -5,12 +5,16 @@ from app.db.session import Session
 from datetime import datetime
 
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
+from starlette.responses import PlainTextResponse, JSONResponse
 
 app = Starlette()
 
+@app.route('/', methods=['GET'])
+async def root(request):
+    return PlainTextResponse('Asuh, dude?')
+
 @app.route('/spots', methods=['GET'])
-def spots(request):
+async def spots(request):
     session = Session()
     spots_query = session.query(Spot)
 

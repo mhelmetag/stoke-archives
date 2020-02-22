@@ -13,7 +13,7 @@ from alembic import context
 
 config = context.config
 
-url = os.getenv('DB_URL', 'postgresql://localhost/stoke_archives') 
+url = os.getenv('DATABASE_URL', 'postgresql://localhost/stoke_archives') 
 config.set_main_option('sqlalchemy.url', url)
 
 fileConfig(config.config_file_name)

@@ -1,0 +1,8 @@
+{
+    "name": "Stoke Archive",
+    "description": "An archive of swell data for machine learning and other things",
+    "image": "heroku/python",
+    "repository": "https://github.com/mhelmetag/stoke-archive",
+    "keywords": ["python"],
+    "addons": ["heroku-postgresql"]
+  }

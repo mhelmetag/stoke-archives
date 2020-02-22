@@ -9,7 +9,7 @@ The spots I'm currently tracking. California for now.
 ### Endpoint
 
 ```
-GET /spots
+GET /spots?surfline_spot_ids=5842041f4e65fad6a7708805,5842041f4e65fad6a770893f
 ```
 
 ```json
@@ -33,10 +33,12 @@ GET /spots
 
 Most of the reason to have this historic data is for machine learning. So the attributes that're saved off are tailored to predicting future surf forecasts. Or, at least, what I think are important attributes for that.
 
+Times are in UTC and are ISO format.
+
 ### Endpoint
 
 ```
-GET /forecasts
+GET /forecasts?spot_ids=1,2,3&after=2020-01-15
 ```
 
 ```json
@@ -51,7 +53,7 @@ GET /forecasts
 {
   "id": 1,
   "spot_id": 1,
-  "timestamp": "2020-02-22T11:15:21.477666+00:00",
+  "timestamp": "2020-02-22T11:15:21.477666",
   "am_min_height": 1,
   "am_max_height": 2,
   "am_rating": "POOR_TO_FAIR",

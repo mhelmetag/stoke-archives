@@ -30,7 +30,7 @@ class Forecast(Base):
         return {
             'id': self.id,
             'spot_id': self.spot_id,
-            'timestamp': self.timestamp.replace(tzinfo=datetime.timezone.utc).isoformat(),
+            'timestamp': self.timestamp.isoformat(),
             'am_min_height': self.am_min_height,
             'am_max_height': self.am_max_height,
             'am_rating': self.am_rating,

@@ -1,11 +1,11 @@
-from sqlalchemy import Column, Integer, Sequence, ForeignKey, DateTime, String, Float
-
 from app.models.base import Base
+
+from sqlalchemy import Column, Integer, Sequence, ForeignKey, DateTime, String, Float
 
 class Forecast(Base):
     __tablename__ = 'forecasts'
 
-    id = Column(Integer, Sequence('id'), primary_key=True)
+    id = Column(Integer, primary_key=True)
     spot_id = Column(Integer, ForeignKey('spots.id', ondelete='CASCADE'), index=True)
     timestamp = Column(DateTime, nullable=False, index=True)
     am_min_height = Column(Integer, nullable=False)

@@ -1,3 +1,7 @@
+from app.models.base import Base
+from app.models.spot import Spot
+from app.models.forecast import Forecast
+
 import os, sys
 
 from logging.config import fileConfig
@@ -7,22 +11,13 @@ from sqlalchemy import pool
 
 from alembic import context
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
 config = context.config
 
 url = os.getenv('DB_URL', 'postgresql://localhost/stoke_archives') 
 config.set_main_option('sqlalchemy.url', url)
 
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
 fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-from app.models.base import Base
-from app.models.spot import Spot
-from app.models.forecast import Forecast
 target_metadata = Base.metadata
 
 def run_migrations_offline():

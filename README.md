@@ -6,11 +6,9 @@ An archive of swell data for machine learning and other things
 
 The spots I'm currently tracking. California for now.
 
-### Endpoint
+### Spots Endpoint
 
-```
-GET /spots?surfline_spot_ids=5842041f4e65fad6a7708805,5842041f4e65fad6a770893f
-```
+`GET /spots?surfline_spot_ids=5842041f4e65fad6a7708805,5842041f4e65fad6a770893f`
 
 ```json
 {
@@ -18,7 +16,7 @@ GET /spots?surfline_spot_ids=5842041f4e65fad6a7708805,5842041f4e65fad6a770893f
 }
 ```
 
-### Data Structure
+### Spots Data Structure
 
 ```json
 {
@@ -35,11 +33,9 @@ Most of the reason to have this historic data is for machine learning. So the at
 
 Times are in UTC and are ISO format.
 
-### Endpoint
+### Forecast Endpoint
 
-```
-GET /forecasts?spot_ids=1,2,3&after=2020-01-15
-```
+`GET /forecasts?spot_ids=1,2,3&after=2020-01-15`
 
 ```json
 {
@@ -47,7 +43,7 @@ GET /forecasts?spot_ids=1,2,3&after=2020-01-15
 }
 ```
 
-### Data Structure
+### Forecast Data Structure
 
 ```json
 {
@@ -71,3 +67,16 @@ GET /forecasts?spot_ids=1,2,3&after=2020-01-15
   "swell3_direction": 284.06
 }
 ```
+
+## Dev Setup
+
+You'll need to:
+
+1. python3, pipenv, postgresql
+2. A postgres database called `stoke-archives`
+3. Run migrations `$ alembic upgrade head`
+4. Seed spots with your own or using `python app/scipt/seed_spots.py`
+5. Gather forecasts `python app/scipt/fetch_spot_forecasts.py`
+6. Start your server `uvicorn web:app`
+7. ???
+8. Profit

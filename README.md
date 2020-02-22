@@ -4,7 +4,7 @@ An archive of swell data for machine learning and other things
 
 ## Historic Forecast
 
-Most of the reason to have this historic data is for machine learning. So the attributes that're saved off are tailored to being able to predict future surf forecasts. Or, at least, what I think are important attributes for that.
+Most of the reason to have this historic data is for machine learning. So the attributes that're saved off are tailored to predicting future surf forecasts. Or, at least, what I think are important attributes for that.
 
 ### Data Structure
 

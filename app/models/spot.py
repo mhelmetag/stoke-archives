@@ -9,3 +9,11 @@ class Spot(Base):
     surfline_id = Column(String, nullable=False, unique=True)
     surfline_spot_id = Column(String, nullable=False, unique=True, index=True)
     name = Column(String, nullable=False, unique=True)
+
+    def _asdict(self):
+        return {
+            'id': self.id,
+            'surfline_id': self.surfline_id,
+            'surfline_spot_id': self.surfline_spot_id,
+            'name': self.name
+        }

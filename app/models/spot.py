@@ -1,6 +1,6 @@
 from app.models.base import Base
 
-from sqlalchemy import Column, Integer, Sequence, String
+from sqlalchemy import Column, Integer, Sequence, String, ARRAY
 
 class Spot(Base):
     __tablename__ = 'spots'
@@ -9,6 +9,7 @@ class Spot(Base):
     surfline_id = Column(String, nullable=False, unique=True)
     surfline_spot_id = Column(String, nullable=False, unique=True, index=True)
     name = Column(String, nullable=False, unique=True)
+    favorable_swells = Column(ARRAY(String))
 
     def _asdict(self):
         return {

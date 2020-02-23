@@ -8,7 +8,7 @@ class Forecast(Base):
     __tablename__ = 'forecasts'
 
     id = Column(Integer, primary_key=True)
-    spot_id = Column(Integer, ForeignKey('spots.id', ondelete='CASCADE'), index=True)
+    spot_id = Column(Integer, ForeignKey('spots.id', ondelete='CASCADE'), nullable=False, index=True)
     timestamp = Column(DateTime, nullable=False, index=True)
     am_min_height = Column(Integer, nullable=False)
     am_max_height = Column(Integer, nullable=False)

@@ -31,6 +31,18 @@ SPOTS = [
         'surfline_spot_id': '5842041f4e65fad6a7708840',
         'name': 'Sunset Cliffs',
         'favorable_swells': ['W', 'NW']
+    },
+    {
+        'surfline_id': '58f80a72dadb30820bd0ff32',
+        'surfline_spot_id': '584204204e65fad6a77096b1',
+        'name': 'Ventura Point',
+        'favorable_swells': ['S', 'SW', 'W', 'NW']
+    },
+    {
+        'surfline_id': '5977abb4dadb30820b4b8649',
+        'surfline_spot_id': '5977abb3b38c2300127471ec',
+        'name': 'HB Pier Southside',
+        'favorable_swells': ['S', 'SSE', 'SW', 'W', 'WNW']
     }
 ]
 

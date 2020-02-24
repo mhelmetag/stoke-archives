@@ -16,5 +16,6 @@ class Spot(Base):
             'id': self.id,
             'surfline_id': self.surfline_id,
             'surfline_spot_id': self.surfline_spot_id,
-            'name': self.name
+            'name': self.name,
+            'favorable_swells': self.favorable_swells
         }

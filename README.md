@@ -17,7 +17,12 @@ The spots I'm currently tracking. California for now. You can track whichever on
       "id": 3,
       "surfline_id": "58f7ed6adadb30820bb3a39f",
       "surfline_spot_id": "5842041f4e65fad6a770883c",
-      "name": "Windansea"
+      "name": "Windansea",
+      "favorable_swells": [
+        "S",
+        "SW",
+        "WSW"
+      ]
     }
   ]
 }

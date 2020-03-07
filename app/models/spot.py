@@ -1,6 +1,6 @@
 from app.models.base import Base
 
-from sqlalchemy import Column, Integer, Sequence, String, ARRAY
+from sqlalchemy import Column, Integer, String, ARRAY
 
 class Spot(Base):
     __tablename__ = 'spots'

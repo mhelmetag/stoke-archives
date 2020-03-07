@@ -1,6 +1,7 @@
 from app.models.base import Base
 from app.models.spot import Spot
 from app.models.forecast import Forecast
+from app.models.prediction import Prediction
 
 import os, sys
 

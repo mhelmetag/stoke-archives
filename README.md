@@ -65,6 +65,40 @@ Times are in UTC and are ISO format.
 }
 ```
 
+## Prediction
+
+How my predictions from stoke-futures are stacking up.
+
+Times are in UTC and are ISO format.
+
+### Prediction Endpoint
+
+`GET /predictions?spot_ids=1,2,3&created_on=2020-03-07`
+
+```json
+{
+  "predictions": [
+    {
+      "id": 1,
+      "spot_id": 1,
+      "created_on": "2020-03-07T00:36:17.759815",
+      "forecasted_for": "2020-03-08T00:36:17.759815",
+      "surfline_height": 2.5,
+      "stoke_height": 2.5,
+      "swell1_height": 1.02,
+      "swell1_period": 4,
+      "swell1_direction": 243.28,
+      "swell2_height": 1.31,
+      "swell2_period": 12,
+      "swell2_direction": 243.28,
+      "swell3_height": 1.02,
+      "swell3_period": 11,
+      "swell3_direction": 243.28
+    }
+  ]
+}
+```
+
 ## Dev Setup
 
 1. Have python3, pipenv, postgresql

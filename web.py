@@ -59,7 +59,7 @@ async def forecasts(request):
         try:
             after_datetime = datetime.fromisoformat(after_param)
         except:
-            after_datetime = datetime.now()
+            after_datetime = datetime.utcnow()
         
         forecasts_query = forecasts_query.filter(Forecast.timestamp >= after_datetime)
 
@@ -87,7 +87,7 @@ async def predictions(request):
         try:
             created_on_date = datetime.fromisoformat(created_on_param).date()
         except:
-            created_on_date = datetime.now().date()
+            created_on_date = datetime.utcnow().date()
         
         predictions_query = predictions_query.filter(cast(Prediction.created_on, Date) == created_on_date)
 

@@ -4,7 +4,7 @@ from app.db.session import Session
 
 from datetime import datetime, timedelta
 import os
-import math
+from decimal import Decimal
 
 import requests
 
@@ -15,7 +15,7 @@ FORECAST_DAYS = 5
 
 def main():
     session = Session()
-    created_on = datetime.now()
+    created_on = datetime.utcnow()
     spots = session.query(Spot).all()
 
     for spot in spots:
@@ -35,8 +35,8 @@ def main():
                 spot_id=spot_id,
                 created_on=created_on,
                 forecasted_for=forecasted_for,
-                surfline_height=average_height(forecast),
-                stoke_height=round_prediction(prediction),
+                surfline_height=humanized_height_round(average_forecast_height(forecast)),
+                stoke_height=humanized_height_round(prediction),
                 swell1_height=swell['swells'][0]['height'],
                 swell1_period=swell['swells'][0]['period'],
                 swell1_direction=swell['swells'][0]['direction'],
@@ -75,7 +75,7 @@ def fetch_predictions(swells):
         d = {
             'surfline_spot_id': 'Whatever',
             'name': 'Somewhere',
-            'timestamp': datetime.now().isoformat(),
+            'timestamp': datetime.utcnow().isoformat(),
             'swell1_height': swell['swells'][0]['height'],
             'swell1_period': swell['swells'][0]['period'],
             'swell1_is_favorable_direction': convert_direction(swell['swells'][0]['direction']),
@@ -129,7 +129,7 @@ def convert_direction(degrees):
     else:
         return 'Unknown'
 
-def average_height(forecast):
+def average_forecast_height(forecast):
     return (
         forecast['am']['minHeight'] +
         forecast['am']['maxHeight'] +
@@ -137,7 +137,19 @@ def average_height(forecast):
         forecast['pm']['maxHeight']
     ) / 4
 
-def round_prediction(prediction):
-    return math.floor(prediction * 2) / 2
+def humanized_height_round(value):
+    value_d = Decimal(str(value))
+    truncated_value_d = Decimal(int(value))
+    remainder_d = value_d - truncated_value_d
+    additive_d = Decimal(0)
+
+    if remainder_d < Decimal('0.3'):
+        additive_d = Decimal(0)
+    elif remainder_d < 0.8:
+        additive_d = Decimal('0.5')
+    else:
+        additive_d = Decimal(1)
+
+    return float(truncated_value_d + additive_d)
 
 main()

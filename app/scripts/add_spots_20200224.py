@@ -29,5 +29,7 @@ def main():
 
         session.add(spot)
         session.commit()
+    
+    session.close()
 
 main()

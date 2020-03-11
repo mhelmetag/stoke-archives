@@ -50,6 +50,8 @@ def main():
 
             session.add(prediction)
             session.commit()
+    
+    session.close()
 
 def fetch_forecasts(surfline_spot_id):
     url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}'

@@ -38,6 +38,8 @@ async def spots(request):
     spots = spots_query.all()
     spot_dicts = [s._asdict() for s in spots]
 
+    session.close()
+
     return JSONResponse({'spots': spot_dicts})
 
 @app.route('/forecasts', methods=['GET'])
@@ -66,6 +68,8 @@ async def forecasts(request):
     forecasts = forecasts_query.all()
     forecast_dicts = [f._asdict() for f in forecasts]
 
+    session.close()
+
     return JSONResponse({'forecasts': forecast_dicts})
 
 @app.route('/predictions', methods=['GET'])
@@ -93,5 +97,7 @@ async def predictions(request):
 
     predictions = predictions_query.all()
     prediction_dicts = [p._asdict() for p in predictions]
+
+    session.close()
 
     return JSONResponse({'predictions': prediction_dicts})

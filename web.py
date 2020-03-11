@@ -7,9 +7,15 @@ from datetime import datetime
 
 from starlette.applications import Starlette
 from starlette.responses import PlainTextResponse, JSONResponse
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from sqlalchemy import cast, Date
 
-app = Starlette()
+middleware = [
+    Middleware(CORSMiddleware, allow_origins=['*'])
+]
+
+app = Starlette(middleware=middleware)
 
 @app.route('/', methods=['GET'])
 async def root(request):

@@ -54,7 +54,7 @@ def fetch_forecast_info(surfline_spot_id):
     return conditions[0]
 
 def fetch_swell_info(surfline_spot_id):
-    url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=1&maxHeights=false'
+    url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=24&maxHeights=false'
     swell_response = requests.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']

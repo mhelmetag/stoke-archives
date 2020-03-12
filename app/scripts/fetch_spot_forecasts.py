@@ -12,7 +12,7 @@ SWELL_URL = 'https://services.surfline.com/kbyg/spots/forecasts/wave'
 def main():
     session = Session()
     timestamp = datetime.utcnow()
-    spots = session.query(Spot).all()
+    spots = session.query(Spot).filter(Spot.gathering_data == True).all()
 
     for spot in spots:
         spot_id = spot.id

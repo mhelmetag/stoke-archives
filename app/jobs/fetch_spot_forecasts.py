@@ -37,7 +37,16 @@ def main():
             swell2_direction=swell_info['swells'][1]['direction'],
             swell3_height=swell_info['swells'][2]['height'],
             swell3_period=swell_info['swells'][2]['period'],
-            swell3_direction=swell_info['swells'][2]['direction']
+            swell3_direction=swell_info['swells'][2]['direction'],
+            swell4_height=swell_info['swells'][3]['height'],
+            swell4_period=swell_info['swells'][3]['period'],
+            swell4_direction=swell_info['swells'][3]['direction'],
+            swell5_height=swell_info['swells'][4]['height'],
+            swell5_period=swell_info['swells'][4]['period'],
+            swell5_direction=swell_info['swells'][4]['direction'],
+            swell6_height=swell_info['swells'][5]['height'],
+            swell6_period=swell_info['swells'][5]['period'],
+            swell6_direction=swell_info['swells'][5]['direction']
         )
 
         session.add(forecast)

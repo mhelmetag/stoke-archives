@@ -45,7 +45,16 @@ def main():
                 swell2_direction=swell['swells'][1]['direction'],
                 swell3_height=swell['swells'][2]['height'],
                 swell3_period=swell['swells'][2]['period'],
-                swell3_direction=swell['swells'][2]['direction']
+                swell3_direction=swell['swells'][2]['direction'],
+                swell4_height=swell['swells'][3]['height'],
+                swell4_period=swell['swells'][3]['period'],
+                swell4_direction=swell['swells'][3]['direction'],
+                swell5_height=swell['swells'][4]['height'],
+                swell5_period=swell['swells'][4]['period'],
+                swell5_direction=swell['swells'][4]['direction'],
+                swell6_height=swell['swells'][5]['height'],
+                swell6_period=swell['swells'][5]['period'],
+                swell6_direction=swell['swells'][5]['direction']
             )
 
             session.add(prediction)

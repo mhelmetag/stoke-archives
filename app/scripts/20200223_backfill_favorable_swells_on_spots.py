@@ -29,6 +29,7 @@ SPOTS = [
     }
 ]
 
+
 def main():
     session = Session()
 
@@ -36,9 +37,11 @@ def main():
         surfline_spot_id = spot_attributes['surfline_spot_id']
         favorable_swells = spot_attributes['favorable_swells']
 
-        session.query(Spot).filter(Spot.surfline_spot_id == surfline_spot_id).update({'favorable_swells': favorable_swells})
+        session.query(Spot).filter(Spot.surfline_spot_id == surfline_spot_id).update(
+            {'favorable_swells': favorable_swells})
         session.commit()
 
     session.close()
+
 
 main()

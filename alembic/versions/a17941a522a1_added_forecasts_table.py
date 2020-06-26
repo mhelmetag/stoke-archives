@@ -41,8 +41,10 @@ def upgrade():
         sa.ForeignKeyConstraint(['spot_id'], ['spots.id'], ondelete='CASCADE'),
         sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_forecasts_spot_id'), 'forecasts', ['spot_id'], unique=False)
-    op.create_index(op.f('ix_forecasts_timestamp'), 'forecasts', ['timestamp'], unique=False)
+    op.create_index(op.f('ix_forecasts_spot_id'),
+                    'forecasts', ['spot_id'], unique=False)
+    op.create_index(op.f('ix_forecasts_timestamp'),
+                    'forecasts', ['timestamp'], unique=False)
     # ### end Alembic commands ###
 
 

@@ -28,7 +28,8 @@ def upgrade():
         sa.UniqueConstraint('name'),
         sa.UniqueConstraint('surfline_id')
     )
-    op.create_index(op.f('ix_spots_surfline_spot_id'), 'spots', ['surfline_spot_id'], unique=True)
+    op.create_index(op.f('ix_spots_surfline_spot_id'),
+                    'spots', ['surfline_spot_id'], unique=True)
     # ### end Alembic commands ###
 
 

@@ -10,8 +10,9 @@ import requests
 
 FORECAST_URL = 'https://services.surfline.com/kbyg/regions/forecasts/conditions'
 SWELL_URL = 'https://services.surfline.com/kbyg/spots/forecasts/wave'
-STOKE_FUTURES_URL = os.getenv('STOKE_FUTURES_URL', 'http://localhost:8001') 
+STOKE_FUTURES_URL = os.getenv('STOKE_FUTURES_URL', 'http://localhost:8001')
 FORECAST_DAYS = 5
+
 
 def main():
     session = Session()
@@ -35,7 +36,8 @@ def main():
                 spot_id=spot_id,
                 created_on=created_on,
                 forecasted_for=forecasted_for,
-                surfline_height=humanized_height_round(average_forecast_height(forecast)),
+                surfline_height=humanized_height_round(
+                    average_forecast_height(forecast)),
                 stoke_height=humanized_height_round(prediction),
                 swell1_height=swell['swells'][0]['height'],
                 swell1_period=swell['swells'][0]['period'],
@@ -59,24 +61,27 @@ def main():
 
             session.add(prediction)
             session.commit()
-    
+
     session.close()
+
 
 def fetch_forecasts(surfline_spot_id):
     url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}'
     forecast_response = requests.get(url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
-    
+
     return conditions
+
 
 def fetch_swells(surfline_spot_id):
     url = f'{SWELL_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}&intervalHours=24&maxHeights=false'
     swell_response = requests.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']
-    
+
     return waves
+
 
 def fetch_predictions(swells):
     url = f'{STOKE_FUTURES_URL}/predict'
@@ -103,8 +108,9 @@ def fetch_predictions(swells):
     prediction_response = requests.post(url, json={'data': data}, timeout=120)
     json_prediction_response = prediction_response.json()
     predictions = json_prediction_response['predictions']
-    
+
     return predictions
+
 
 def convert_direction(degrees):
     if degrees >= 11.25 and degrees < 33.75:
@@ -140,6 +146,7 @@ def convert_direction(degrees):
     else:
         return 'Unknown'
 
+
 def average_forecast_height(forecast):
     return (
         forecast['am']['minHeight'] +
@@ -147,6 +154,7 @@ def average_forecast_height(forecast):
         forecast['pm']['minHeight'] +
         forecast['pm']['maxHeight']
     ) / 4
+
 
 def humanized_height_round(value):
     value_d = Decimal(str(value))
@@ -162,5 +170,6 @@ def humanized_height_round(value):
         additive_d = Decimal(1)
 
     return float(truncated_value_d + additive_d)
+
 
 main()

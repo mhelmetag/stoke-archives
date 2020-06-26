@@ -16,6 +16,7 @@ NEW_SPOTS = [
     }
 ]
 
+
 def main():
     session = Session()
 
@@ -29,7 +30,8 @@ def main():
 
         session.add(spot)
         session.commit()
-    
+
     session.close()
+
 
 main()

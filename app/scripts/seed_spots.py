@@ -60,6 +60,7 @@ SPOTS = [
     }
 ]
 
+
 def main():
     session = Session()
 
@@ -75,5 +76,6 @@ def main():
         session.commit()
 
     session.close()
+
 
 main()

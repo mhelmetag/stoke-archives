@@ -4,11 +4,13 @@ import datetime
 
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, Float
 
+
 class Prediction(Base):
     __tablename__ = 'predictions'
 
     id = Column(Integer, primary_key=True)
-    spot_id = Column(Integer, ForeignKey('spots.id', ondelete='CASCADE'), nullable=False, index=True)
+    spot_id = Column(Integer, ForeignKey(
+        'spots.id', ondelete='CASCADE'), nullable=False, index=True)
     created_on = Column(DateTime, nullable=False, index=True)
     forecasted_for = Column(DateTime, nullable=False, index=True)
     surfline_height = Column(Float, nullable=False)

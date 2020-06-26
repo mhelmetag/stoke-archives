@@ -3,7 +3,8 @@ from app.models.spot import Spot
 from app.models.forecast import Forecast
 from app.models.prediction import Prediction
 
-import os, sys
+import os
+import sys
 
 from logging.config import fileConfig
 
@@ -14,12 +15,13 @@ from alembic import context
 
 config = context.config
 
-url = os.getenv('DATABASE_URL', 'postgresql://localhost/stoke_archives') 
+url = os.getenv('DATABASE_URL', 'postgresql://localhost/stoke_archives')
 config.set_main_option('sqlalchemy.url', url)
 
 fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
+
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
@@ -68,6 +70,6 @@ def run_migrations_online():
 
 
 if context.is_offline_mode():
-    run_migrations_offline()   
+    run_migrations_offline()
 else:
     run_migrations_online()

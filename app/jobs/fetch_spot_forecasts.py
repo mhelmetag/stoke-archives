@@ -9,6 +9,7 @@ import requests
 FORECAST_URL = 'https://services.surfline.com/kbyg/regions/forecasts/conditions'
 SWELL_URL = 'https://services.surfline.com/kbyg/spots/forecasts/wave'
 
+
 def main():
     session = Session()
     timestamp = datetime.utcnow()
@@ -51,23 +52,26 @@ def main():
 
         session.add(forecast)
         session.commit()
-    
+
     session.close()
+
 
 def fetch_forecast_info(surfline_spot_id):
     url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days=1'
     forecast_response = requests.get(url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
-    
+
     return conditions[0]
+
 
 def fetch_swell_info(surfline_spot_id):
     url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=24&maxHeights=false'
     swell_response = requests.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']
-    
+
     return waves[0]
+
 
 main()

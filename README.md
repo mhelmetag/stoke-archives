@@ -18,11 +18,7 @@ The spots I'm currently tracking. California for now. You can track whichever on
       "surfline_id": "58f7ed6adadb30820bb3a39f",
       "surfline_spot_id": "5842041f4e65fad6a770883c",
       "name": "Windansea",
-      "favorable_swells": [
-        "S",
-        "SW",
-        "WSW"
-      ]
+      "favorable_swells": ["S", "SW", "WSW"]
     }
   ]
 }
@@ -36,7 +32,7 @@ Times are in UTC and are ISO format.
 
 ### Forecast Endpoint
 
-`GET /forecasts?spot_ids=1,2,3&after=2020-01-15`
+`GET /forecasts?spot_ids=1,2,3&after=2020-01-15&page=1`
 
 ```json
 {
@@ -73,7 +69,7 @@ Times are in UTC and are ISO format.
 
 ### Prediction Endpoint
 
-`GET /predictions?spot_ids=1,2,3&created_on=2020-03-07`
+`GET /predictions?spot_ids=1,2,3&created_on=2020-03-07&page=1`
 
 ```json
 {

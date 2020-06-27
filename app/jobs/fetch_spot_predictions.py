@@ -94,13 +94,28 @@ def fetch_predictions(swells):
             'timestamp': datetime.utcnow().isoformat(),
             'swell1_height': swell['swells'][0]['height'],
             'swell1_period': swell['swells'][0]['period'],
+            'swell1_direction': swell['swells'][0]['direction'],
             'swell1_is_favorable_direction': convert_direction(swell['swells'][0]['direction']),
             'swell2_height': swell['swells'][1]['height'],
             'swell2_period': swell['swells'][1]['period'],
+            'swell2_direction': swell['swells'][1]['direction'],
             'swell2_is_favorable_direction': convert_direction(swell['swells'][1]['direction']),
             'swell3_height': swell['swells'][2]['height'],
             'swell3_period': swell['swells'][2]['period'],
-            'swell3_is_favorable_direction': convert_direction(swell['swells'][2]['direction'])
+            'swell3_direction': swell['swells'][2]['direction'],
+            'swell3_is_favorable_direction': convert_direction(swell['swells'][2]['direction']),
+            'swell4_height': swell['swells'][3]['height'],
+            'swell4_period': swell['swells'][3]['period'],
+            'swell4_direction': swell['swells'][3]['direction'],
+            'swell4_is_favorable_direction': convert_direction(swell['swells'][3]['direction']),
+            'swell5_height': swell['swells'][4]['height'],
+            'swell5_period': swell['swells'][4]['period'],
+            'swell5_direction': swell['swells'][4]['direction'],
+            'swell5_is_favorable_direction': convert_direction(swell['swells'][4]['direction']),
+            'swell6_height': swell['swells'][5]['height'],
+            'swell6_period': swell['swells'][5]['period'],
+            'swell6_direction': swell['swells'][5]['direction'],
+            'swell6_is_favorable_direction': convert_direction(swell['swells'][5]['direction'])
         }
 
         data.append(d)

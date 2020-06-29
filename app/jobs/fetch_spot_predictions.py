@@ -120,7 +120,7 @@ def fetch_predictions(swells):
 
         data.append(d)
 
-    prediction_response = requests.post(url, json={'data': data}, timeout=120)
+    prediction_response = requests.post(url, json={'data': data}, timeout=180)
     json_prediction_response = prediction_response.json()
     predictions = json_prediction_response['predictions']
 

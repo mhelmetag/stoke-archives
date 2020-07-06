@@ -1,7 +1,5 @@
 from app.models.base import Base
 
-import datetime
-
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, String, Float
 
 

@@ -4,7 +4,7 @@ from app.models.forecast import Forecast
 from app.models.prediction import Prediction
 
 import os
-import sys
+import re
 
 from logging.config import fileConfig
 
@@ -13,10 +13,13 @@ from sqlalchemy import pool
 
 from alembic import context
 
-config = context.config
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://localhost/mammoth')
 
-url = os.getenv('DATABASE_URL', 'postgresql://localhost/stoke_archives')
-config.set_main_option('sqlalchemy.url', url)
+# heroku using postgres:// but sqlalchemy wanting postgresql://
+CORRECTED_DATABASE_URL = re.sub('postgres:', 'postgresql:', DATABASE_URL)
+
+config = context.config
+config.set_main_option('sqlalchemy.url', CORRECTED_DATABASE_URL)
 
 fileConfig(config.config_file_name)
 

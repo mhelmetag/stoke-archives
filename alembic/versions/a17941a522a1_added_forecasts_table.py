@@ -1,10 +1,10 @@
-"""added forecasts table
+'''added forecasts table
 
 Revision ID: a17941a522a1
 Revises: 4f20ee77c00e
 Create Date: 2020-02-22 00:46:51.489611
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 

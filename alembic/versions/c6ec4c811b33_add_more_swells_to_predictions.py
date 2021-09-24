@@ -1,10 +1,10 @@
-"""add more swells to predictions
+'''add more swells to predictions
 
 Revision ID: c6ec4c811b33
 Revises: 955a35618860
 Create Date: 2020-03-12 21:57:40.514412
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 
@@ -28,7 +28,7 @@ def upgrade():
     op.add_column('predictions', sa.Column('swell6_height', sa.Float()))
     op.add_column('predictions', sa.Column('swell6_period', sa.Integer()))
     op.execute(
-        """
+        '''
             UPDATE predictions
             SET
                 swell4_direction = 0.0,
@@ -50,7 +50,7 @@ def upgrade():
                 swell6_direction IS NULL AND
                 swell6_height IS NULL AND
                 swell6_period IS NULL
-        """
+        '''
     )
     op.alter_column('predictions', 'swell4_direction', nullable=False)
     op.alter_column('predictions', 'swell4_height', nullable=False)

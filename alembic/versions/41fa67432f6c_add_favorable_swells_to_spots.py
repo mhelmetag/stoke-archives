@@ -1,10 +1,10 @@
-"""add favorable swells to spots
+'''add favorable swells to spots
 
 Revision ID: 41fa67432f6c
 Revises: a17941a522a1
 Create Date: 2020-02-23 00:54:31.504744
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 

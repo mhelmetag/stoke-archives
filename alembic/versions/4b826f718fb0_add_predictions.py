@@ -1,10 +1,10 @@
-"""add predictions
+'''add predictions
 
 Revision ID: 4b826f718fb0
 Revises: b22cca33828c
 Create Date: 2020-03-06 23:46:18.955153
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 

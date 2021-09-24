@@ -1,6 +1,7 @@
 from app.models.spot import Spot
 from app.models.forecast import Forecast
 from app.db.session import Session
+from app.shared.surfline import login
 
 from datetime import datetime
 
@@ -10,16 +11,18 @@ FORECAST_URL = 'https://services.surfline.com/kbyg/regions/forecasts/conditions'
 SWELL_URL = 'https://services.surfline.com/kbyg/spots/forecasts/wave'
 
 
-def main():
+def main() -> None:
     session = Session()
     timestamp = datetime.utcnow()
     spots = session.query(Spot).filter(Spot.gathering_data == True).all()
 
+    access_token = login()
+
     for spot in spots:
         spot_id = spot.id
         surfline_spot_id = spot.surfline_spot_id
-        forecast_info = fetch_forecast_info(surfline_spot_id)
-        swell_info = fetch_swell_info(surfline_spot_id)
+        forecast_info = fetch_forecast_info(surfline_spot_id, access_token)
+        swell_info = fetch_swell_info(surfline_spot_id, access_token)
 
         forecast = Forecast(
             spot_id=spot_id,
@@ -56,8 +59,8 @@ def main():
     session.close()
 
 
-def fetch_forecast_info(surfline_spot_id):
-    url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days=1'
+def fetch_forecast_info(surfline_spot_id: str, access_token: str) -> map:
+    url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days=1&accesstoken={access_token}'
     forecast_response = requests.get(url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
@@ -65,8 +68,8 @@ def fetch_forecast_info(surfline_spot_id):
     return conditions[0]
 
 
-def fetch_swell_info(surfline_spot_id):
-    url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=24&maxHeights=false'
+def fetch_swell_info(surfline_spot_id: str, access_token: str) -> map:
+    url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=24&maxHeights=false&accesstoken={access_token}'
     swell_response = requests.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']

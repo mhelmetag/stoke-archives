@@ -12,6 +12,5 @@ uvicorn = "*"
 psycopg2-binary = "*"
 
 [dev-packages]
-pytest = "*"
 pylint = "*"
 autopep8 = "*"

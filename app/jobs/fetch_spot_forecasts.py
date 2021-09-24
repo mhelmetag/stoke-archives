@@ -1,7 +1,7 @@
 from app.models.spot import Spot
 from app.models.forecast import Forecast
 from app.db.session import Session
-from app.shared.surfline import login
+from app.shared.surfline import login, special_get
 
 from datetime import datetime
 
@@ -64,7 +64,7 @@ def main() -> None:
 
 def fetch_forecast_info(session: requests.Session, surfline_spot_id: str, access_token: str) -> map:
     url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days=1&accesstoken={access_token}'
-    forecast_response = session.get(url)
+    forecast_response = special_get(session, url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
 
@@ -73,7 +73,7 @@ def fetch_forecast_info(session: requests.Session, surfline_spot_id: str, access
 
 def fetch_swell_info(session: requests.Session, surfline_spot_id: str, access_token: str) -> map:
     url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=24&maxHeights=false&accesstoken={access_token}'
-    swell_response = session.get(url)
+    swell_response = special_get(session, url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']
 

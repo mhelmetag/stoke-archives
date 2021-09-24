@@ -171,7 +171,7 @@ def average_forecast_height(forecast: map) -> float:
         forecast['am']['maxHeight'] +
         forecast['pm']['minHeight'] +
         forecast['pm']['maxHeight']
-    ) / 4.0
+    ) / 4
 
 
 def humanized_height_round(value) -> float:

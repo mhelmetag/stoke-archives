@@ -1,10 +1,10 @@
-"""added spots table
+'''added spots table
 
 Revision ID: 4f20ee77c00e
 Revises: 
 Create Date: 2020-02-22 00:40:58.921281
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 

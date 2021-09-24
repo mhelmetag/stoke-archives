@@ -1,10 +1,10 @@
-"""add gathering data on spot
+'''add gathering data on spot
 
 Revision ID: 955a35618860
 Revises: 4b826f718fb0
 Create Date: 2020-03-11 00:18:35.772159
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 

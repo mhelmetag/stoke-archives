@@ -1,10 +1,10 @@
-"""make spot name not unique
+'''make spot name not unique
 
 Revision ID: b22cca33828c
 Revises: 41fa67432f6c
 Create Date: 2020-02-24 12:18:59.208635
 
-"""
+'''
 from alembic import op
 import sqlalchemy as sa
 

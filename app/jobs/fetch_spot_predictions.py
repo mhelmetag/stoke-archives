@@ -1,6 +1,7 @@
 from app.models.spot import Spot
 from app.models.prediction import Prediction
 from app.db.session import Session
+from app.shared.surfline import login
 
 from datetime import datetime, timedelta
 import os
@@ -14,16 +15,18 @@ STOKE_FUTURES_URL = os.getenv('STOKE_FUTURES_URL', 'http://localhost:8001')
 FORECAST_DAYS = 5
 
 
-def main():
+def main() -> None:
     session = Session()
     created_on = datetime.utcnow()
     spots = session.query(Spot).all()
 
+    access_token = login()
+
     for spot in spots:
         spot_id = spot.id
         surfline_spot_id = spot.surfline_spot_id
-        forecasts = fetch_forecasts(surfline_spot_id)
-        swells = fetch_swells(surfline_spot_id)
+        forecasts = fetch_forecasts(surfline_spot_id, access_token)
+        swells = fetch_swells(surfline_spot_id, access_token)
         predictions = fetch_predictions(swells)
 
         for i in range(0, (FORECAST_DAYS - 1)):
@@ -65,8 +68,8 @@ def main():
     session.close()
 
 
-def fetch_forecasts(surfline_spot_id):
-    url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}'
+def fetch_forecasts(surfline_spot_id: str, access_token: str) -> list:
+    url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}&accesstoken={access_token}'
     forecast_response = requests.get(url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
@@ -74,8 +77,8 @@ def fetch_forecasts(surfline_spot_id):
     return conditions
 
 
-def fetch_swells(surfline_spot_id):
-    url = f'{SWELL_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}&intervalHours=24&maxHeights=false'
+def fetch_swells(surfline_spot_id: str, access_token: str) -> list:
+    url = f'{SWELL_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}&intervalHours=24&maxHeights=false&accesstoken={access_token}'
     swell_response = requests.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']
@@ -83,7 +86,7 @@ def fetch_swells(surfline_spot_id):
     return waves
 
 
-def fetch_predictions(swells):
+def fetch_predictions(swells: list) -> map:
     url = f'{STOKE_FUTURES_URL}/predict'
     data = []
 
@@ -127,7 +130,7 @@ def fetch_predictions(swells):
     return predictions
 
 
-def convert_direction(degrees):
+def convert_direction(degrees: float) -> str:
     if degrees >= 11.25 and degrees < 33.75:
         return 'NNE'
     elif degrees >= 33.75 and degrees < 56.25:
@@ -162,16 +165,16 @@ def convert_direction(degrees):
         return 'Unknown'
 
 
-def average_forecast_height(forecast):
+def average_forecast_height(forecast: map) -> float:
     return (
         forecast['am']['minHeight'] +
         forecast['am']['maxHeight'] +
         forecast['pm']['minHeight'] +
         forecast['pm']['maxHeight']
-    ) / 4
+    ) / 4.0
 
 
-def humanized_height_round(value):
+def humanized_height_round(value) -> float:
     value_d = Decimal(str(value))
     truncated_value_d = Decimal(int(value))
     remainder_d = value_d - truncated_value_d

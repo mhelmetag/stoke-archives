@@ -21,7 +21,7 @@ app = Starlette(middleware=middleware)
 
 
 @app.route('/', methods=['GET'])
-async def root(request):
+async def root(_):
     return PlainTextResponse('Asuh, dude?')
 
 

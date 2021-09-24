@@ -8,7 +8,7 @@ SURFLINE_USERNAME = os.getenv('SURFLINE_USERNAME', '')
 SURFLINE_PASSWORD = os.getenv('SURFLINE_PASSWORD', '')
 
 
-def login() -> str:
+def login(session: requests.Session) -> str:
     payload = {
         'authorizationString': AUTHORIZATION_STRING,
         'device_id': 'Chrome-93.0.4577.82',
@@ -19,7 +19,7 @@ def login() -> str:
         'username': SURFLINE_USERNAME
     }
 
-    response = requests.post(LOGIN_URL, json=payload)
+    response = session.post(LOGIN_URL, json=payload)
 
     if response.ok:
         data = response.json()

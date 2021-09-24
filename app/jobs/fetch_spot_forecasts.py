@@ -16,13 +16,16 @@ def main() -> None:
     timestamp = datetime.utcnow()
     spots = session.query(Spot).filter(Spot.gathering_data == True).all()
 
-    access_token = login()
+    requests_session = requests.Session()
+    access_token = login(requests_session)
 
     for spot in spots:
         spot_id = spot.id
         surfline_spot_id = spot.surfline_spot_id
-        forecast_info = fetch_forecast_info(surfline_spot_id, access_token)
-        swell_info = fetch_swell_info(surfline_spot_id, access_token)
+        forecast_info = fetch_forecast_info(
+            requests_session, surfline_spot_id, access_token)
+        swell_info = fetch_swell_info(
+            requests_session, surfline_spot_id, access_token)
 
         forecast = Forecast(
             spot_id=spot_id,
@@ -59,18 +62,18 @@ def main() -> None:
     session.close()
 
 
-def fetch_forecast_info(surfline_spot_id: str, access_token: str) -> map:
+def fetch_forecast_info(session: requests.Session, surfline_spot_id: str, access_token: str) -> map:
     url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days=1&accesstoken={access_token}'
-    forecast_response = requests.get(url)
+    forecast_response = session.get(url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
 
     return conditions[0]
 
 
-def fetch_swell_info(surfline_spot_id: str, access_token: str) -> map:
+def fetch_swell_info(session: requests.Session, surfline_spot_id: str, access_token: str) -> map:
     url = f'{SWELL_URL}?spotId={surfline_spot_id}&days=1&intervalHours=24&maxHeights=false&accesstoken={access_token}'
-    swell_response = requests.get(url)
+    swell_response = session.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']
 

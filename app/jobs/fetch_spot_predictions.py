@@ -20,13 +20,15 @@ def main() -> None:
     created_on = datetime.utcnow()
     spots = session.query(Spot).all()
 
-    access_token = login()
+    requests_session = requests.Session()
+    access_token = login(requests_session)
 
     for spot in spots:
         spot_id = spot.id
         surfline_spot_id = spot.surfline_spot_id
-        forecasts = fetch_forecasts(surfline_spot_id, access_token)
-        swells = fetch_swells(surfline_spot_id, access_token)
+        forecasts = fetch_forecasts(
+            requests_session, surfline_spot_id, access_token)
+        swells = fetch_swells(requests_session, surfline_spot_id, access_token)
         predictions = fetch_predictions(swells)
 
         for i in range(0, (FORECAST_DAYS - 1)):
@@ -68,18 +70,18 @@ def main() -> None:
     session.close()
 
 
-def fetch_forecasts(surfline_spot_id: str, access_token: str) -> list:
+def fetch_forecasts(session: requests.Session, surfline_spot_id: str, access_token: str) -> list:
     url = f'{FORECAST_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}&accesstoken={access_token}'
-    forecast_response = requests.get(url)
+    forecast_response = session.get(url)
     json_forecast_response = forecast_response.json()
     conditions = json_forecast_response['data']['conditions']
 
     return conditions
 
 
-def fetch_swells(surfline_spot_id: str, access_token: str) -> list:
+def fetch_swells(session: requests.Session, surfline_spot_id: str, access_token: str) -> list:
     url = f'{SWELL_URL}?spotId={surfline_spot_id}&days={FORECAST_DAYS}&intervalHours=24&maxHeights=false&accesstoken={access_token}'
-    swell_response = requests.get(url)
+    swell_response = session.get(url)
     json_swell_response = swell_response.json()
     waves = json_swell_response['data']['wave']
 

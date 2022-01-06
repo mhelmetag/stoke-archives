@@ -64,19 +64,21 @@ SPOTS = [
 def main() -> None:
     session = Session()
 
-    for spot_attributes in SPOTS:
-        spot = Spot(
-            surfline_id=spot_attributes['surfline_id'],
-            surfline_spot_id=spot_attributes['surfline_spot_id'],
-            name=spot_attributes['name'],
-            favorable_swells=spot_attributes['favorable_swells'],
-            gathering_data=spot_attributes['gathering_data']
-        )
+    try:
+        for spot_attributes in SPOTS:
+            spot = Spot(
+                surfline_id=spot_attributes['surfline_id'],
+                surfline_spot_id=spot_attributes['surfline_spot_id'],
+                name=spot_attributes['name'],
+                favorable_swells=spot_attributes['favorable_swells'],
+                gathering_data=spot_attributes['gathering_data']
+            )
 
-        session.add(spot)
-        session.commit()
+            session.add(spot)
+            session.commit()
 
-    session.close()
+    finally:
+        session.close()
 
 
 main()

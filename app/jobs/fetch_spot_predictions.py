@@ -15,59 +15,65 @@ STOKE_FUTURES_URL = os.getenv('STOKE_FUTURES_URL', 'http://localhost:8001')
 FORECAST_DAYS = 5
 
 
+# should be run at 12am UTC everyday
+
 def main() -> None:
     session = Session()
-    created_on = datetime.utcnow()
-    spots = session.query(Spot).all()
 
-    requests_session = requests.Session()
-    access_token = login(requests_session)
+    try:
+        created_on = datetime.utcnow()
+        spots = session.query(Spot).all()
 
-    for spot in spots:
-        spot_id = spot.id
-        surfline_spot_id = spot.surfline_spot_id
-        forecasts = fetch_forecasts(
-            requests_session, surfline_spot_id, access_token)
-        swells = fetch_swells(requests_session, surfline_spot_id, access_token)
-        predictions = fetch_predictions(swells)
+        requests_session = requests.Session()
+        access_token = login(requests_session)
 
-        for i in range(0, (FORECAST_DAYS - 1)):
-            forecast = forecasts[i]
-            swell = swells[i]
-            prediction = predictions[i]
-            forecasted_for = created_on + timedelta(days=(i + 1))
+        for spot in spots:
+            spot_id = spot.id
+            surfline_spot_id = spot.surfline_spot_id
+            forecasts = fetch_forecasts(
+                requests_session, surfline_spot_id, access_token)
+            swells = fetch_swells(
+                requests_session, surfline_spot_id, access_token)
+            predictions = fetch_predictions(swells)
 
-            prediction = Prediction(
-                spot_id=spot_id,
-                created_on=created_on,
-                forecasted_for=forecasted_for,
-                surfline_height=humanized_height_round(
-                    average_forecast_height(forecast)),
-                stoke_height=humanized_height_round(prediction),
-                swell1_height=swell['swells'][0]['height'],
-                swell1_period=swell['swells'][0]['period'],
-                swell1_direction=swell['swells'][0]['direction'],
-                swell2_height=swell['swells'][1]['height'],
-                swell2_period=swell['swells'][1]['period'],
-                swell2_direction=swell['swells'][1]['direction'],
-                swell3_height=swell['swells'][2]['height'],
-                swell3_period=swell['swells'][2]['period'],
-                swell3_direction=swell['swells'][2]['direction'],
-                swell4_height=swell['swells'][3]['height'],
-                swell4_period=swell['swells'][3]['period'],
-                swell4_direction=swell['swells'][3]['direction'],
-                swell5_height=swell['swells'][4]['height'],
-                swell5_period=swell['swells'][4]['period'],
-                swell5_direction=swell['swells'][4]['direction'],
-                swell6_height=swell['swells'][5]['height'],
-                swell6_period=swell['swells'][5]['period'],
-                swell6_direction=swell['swells'][5]['direction']
-            )
+            for i in range(0, (FORECAST_DAYS - 1)):
+                forecast = forecasts[i]
+                swell = swells[i]
+                prediction = predictions[i]
+                forecasted_for = created_on + timedelta(days=(i + 1))
 
-            session.add(prediction)
-            session.commit()
+                prediction = Prediction(
+                    spot_id=spot_id,
+                    created_on=created_on,
+                    forecasted_for=forecasted_for,
+                    surfline_height=humanized_height_round(
+                        average_forecast_height(forecast)),
+                    stoke_height=humanized_height_round(prediction),
+                    swell1_height=swell['swells'][0]['height'],
+                    swell1_period=swell['swells'][0]['period'],
+                    swell1_direction=swell['swells'][0]['direction'],
+                    swell2_height=swell['swells'][1]['height'],
+                    swell2_period=swell['swells'][1]['period'],
+                    swell2_direction=swell['swells'][1]['direction'],
+                    swell3_height=swell['swells'][2]['height'],
+                    swell3_period=swell['swells'][2]['period'],
+                    swell3_direction=swell['swells'][2]['direction'],
+                    swell4_height=swell['swells'][3]['height'],
+                    swell4_period=swell['swells'][3]['period'],
+                    swell4_direction=swell['swells'][3]['direction'],
+                    swell5_height=swell['swells'][4]['height'],
+                    swell5_period=swell['swells'][4]['period'],
+                    swell5_direction=swell['swells'][4]['direction'],
+                    swell6_height=swell['swells'][5]['height'],
+                    swell6_period=swell['swells'][5]['period'],
+                    swell6_direction=swell['swells'][5]['direction']
+                )
 
-    session.close()
+                session.add(prediction)
+                session.commit()
+
+    finally:
+        session.close()
 
 
 def fetch_forecasts(session: requests.Session, surfline_spot_id: str, access_token: str) -> list:

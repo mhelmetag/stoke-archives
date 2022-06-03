@@ -18,6 +18,11 @@ FORECAST_DAYS = 5
 # should be run at 12am UTC everyday
 
 def main() -> None:
+    # for each spot
+    # fetch the current swell data
+    # make a prediction for onshore swell height
+    # record prediction from surfline and ml model
+
     session = Session()
 
     try:

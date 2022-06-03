@@ -14,6 +14,11 @@ SWELL_URL = 'https://services.surfline.com/kbyg/spots/forecasts/wave'
 # should be run at 12am and 4pm UTC
 
 def main() -> None:
+    # for each spot that's gathering data
+    # gather forecast and swell data
+    # format to a forecast object
+    # save in DB
+
     session = Session()
 
     try:
